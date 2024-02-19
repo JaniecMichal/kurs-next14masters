@@ -10,12 +10,12 @@ export const ProductDescription = ({ name, category, price }: ProductDescription
 	return (
 		<div className="mt-2 flex justify-between">
 			<div>
-				<h3 className="text-sm font-semibold text-gray-400">{name}</h3>
-				<p className="text-sm text-gray-300">
+				<h3 className="text-sm font-semibold text-gray-600">{name}</h3>
+				<p className="text-sm text-gray-600">
 					<span className="sr-only">Category</span> {category}
 				</p>
 			</div>
-			<p className="text-sm font-medium text-gray-300">
+			<p className="text-sm font-medium text-gray-600">
 				<span className="sr-only">Price</span> {formatMoney(price)}
 			</p>
 		</div>
