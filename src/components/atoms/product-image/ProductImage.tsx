@@ -1,14 +1,16 @@
 type ProductImage = {
 	src: string;
 	alt: string;
+	width?: number;
+	height?: number;
 };
 
-export const ProductImage = ({ src, alt }: ProductImage) => {
+export const ProductImage = ({ src, alt, width, height }: ProductImage) => {
 	return (
-		<div className="h-[500px] w-full overflow-hidden rounded-md bg-slate-50 hover:bg-slate-100">
+		<div className="h-[500px] overflow-hidden rounded-md bg-slate-50 hover:bg-slate-100">
 			<img
-				width={320}
-				height={500}
+				width={width || 320}
+				height={height || 500}
 				alt={alt}
 				src={src}
 				className="h-full w-full object-cover object-center p-4 transition-transform hover:scale-105"
