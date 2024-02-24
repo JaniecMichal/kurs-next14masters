@@ -19,5 +19,5 @@ export default function ProductLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	return <section className="max-w-screen-2xl p-12 text-slate-800">{children}</section>;
+	return <section className="prose max-w-screen-2xl p-12 text-slate-800">{children}</section>;
 }
