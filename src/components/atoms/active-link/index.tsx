@@ -12,15 +12,11 @@ type ActiveLinkProps = {
 	exact?: boolean;
 };
 
-export const ActiveLink = ({
-	href,
-	className,
-	activeClassName,
-	title,
-	exact = true,
-}: ActiveLinkProps) => {
+export const ActiveLink = ({ href, title, exact = true }: ActiveLinkProps) => {
 	const pathname = usePathname();
 	const isActive = exact || (!exact && href === "/") ? pathname === href : pathname.includes(href);
+	const className = "h-full p-2 text-slate-600 hover:text-slate-500 hover:underline";
+	const activeClassName = "border-2 border-slate-500 rounded-md underline";
 
 	return (
 		<Link
