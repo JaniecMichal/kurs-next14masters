@@ -22,7 +22,8 @@ export const ActiveLink = ({ href, title, exact = true }: ActiveLinkProps) => {
 		<Link
 			href={href}
 			className={clsx(`${className}`, { [`${activeClassName}`]: isActive })}
-			aria-current={isActive}
+			aria-label={title}
+			aria-current={isActive ? "page" : undefined}
 		>
 			{title}
 		</Link>
