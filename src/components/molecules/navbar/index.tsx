@@ -13,7 +13,7 @@ const NAV_LINKS: NavLink[] = [
 	},
 	{
 		href: "/products",
-		title: "All products",
+		title: "All",
 	},
 ];
 
