@@ -22,7 +22,7 @@ export const ActiveLink = ({ href, title, exact = true }: ActiveLinkProps) => {
 		<Link
 			href={href}
 			className={clsx(`${className}`, { [`${activeClassName}`]: isActive })}
-			aria-current
+			aria-current={isActive}
 		>
 			{title}
 		</Link>
