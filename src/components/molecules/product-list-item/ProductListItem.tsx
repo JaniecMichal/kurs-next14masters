@@ -9,8 +9,8 @@ type ProductListItemProps = {
 
 export const ProductListItem = ({ product }: ProductListItemProps) => {
 	return (
-		<Link className="text-inherit no-underline" href={`/product/${product.id}`}>
-			<li className="hover:cursor-pointer">
+		<li className="hover:cursor-pointer">
+			<Link className="text-inherit no-underline" href={`/product/${product.id}`}>
 				<article>
 					<ProductImage {...product.image} />
 					<ProductDescription
@@ -19,7 +19,7 @@ export const ProductListItem = ({ product }: ProductListItemProps) => {
 						price={product.price}
 					/>
 				</article>
-			</li>
-		</Link>
+			</Link>
+		</li>
 	);
 };
