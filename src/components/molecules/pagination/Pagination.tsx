@@ -11,7 +11,7 @@ export const Pagination = () => {
 	const nextPage = Number(currentPage) + 1;
 
 	return (
-		<nav className="flex items-center justify-between gap-1">
+		<nav className="flex items-center justify-between gap-1" aria-label="pagination">
 			<ActiveLink
 				href={`/products/${previousPage}` as Route}
 				title="Previous Page"
