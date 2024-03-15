@@ -8,7 +8,7 @@ type ProductDescriptionProps = {
 
 export const ProductDescription = ({ name, category, price }: ProductDescriptionProps) => {
 	return (
-		<div className="mt-2 flex justify-between">
+		<div className="mt-2 flex items-start justify-between">
 			<div>
 				<h3 className="text-sm font-semibold text-gray-600">{name}</h3>
 				<p className="text-sm text-gray-600">
