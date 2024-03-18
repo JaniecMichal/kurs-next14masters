@@ -274,10 +274,21 @@ export type SortDirection =
   | 'ASC'
   | 'DESC';
 
+export type ProductFragment = { description: string, id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> };
+
+export type ProductGetByIdQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type ProductGetByIdQuery = { product?: { description: string, id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null };
+
+export type ProductListItemFragment = { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> };
+
 export type ProductsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProductsGetListQuery = { products: { data: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> } };
+export type ProductsGetListQuery = { products: { data: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> } };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -293,22 +304,72 @@ export class TypedDocumentString<TResult, TVariables>
     return this.value;
   }
 }
-
+export const ProductListItemFragmentDoc = new TypedDocumentString(`
+    fragment ProductListItem on Product {
+  id
+  name
+  categories {
+    name
+  }
+  images {
+    url
+  }
+  price
+}
+    `, {"fragmentName":"ProductListItem"}) as unknown as TypedDocumentString<ProductListItemFragment, unknown>;
+export const ProductFragmentDoc = new TypedDocumentString(`
+    fragment Product on Product {
+  ...ProductListItem
+  description
+}
+    fragment ProductListItem on Product {
+  id
+  name
+  categories {
+    name
+  }
+  images {
+    url
+  }
+  price
+}`, {"fragmentName":"Product"}) as unknown as TypedDocumentString<ProductFragment, unknown>;
+export const ProductGetByIdDocument = new TypedDocumentString(`
+    query ProductGetById($id: ID!) {
+  product(id: $id) {
+    ...Product
+  }
+}
+    fragment Product on Product {
+  ...ProductListItem
+  description
+}
+fragment ProductListItem on Product {
+  id
+  name
+  categories {
+    name
+  }
+  images {
+    url
+  }
+  price
+}`) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList {
   products(take: 10) {
     data {
-      id
-      name
-      description
-      categories {
-        name
-      }
-      images {
-        url
-      }
-      price
+      ...ProductListItem
     }
   }
 }
-    `) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
+    fragment ProductListItem on Product {
+  id
+  name
+  categories {
+    name
+  }
+  images {
+    url
+  }
+  price
+}`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
