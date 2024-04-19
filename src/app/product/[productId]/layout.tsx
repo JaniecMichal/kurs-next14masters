@@ -1,16 +1,19 @@
+import { executeGraphql } from "@/api/products";
+import { ProductGetByIdDocument } from "@/gql/graphql";
 import type { Metadata } from "next";
-import { getProductById } from "@/api/products";
 
 export async function generateMetadata({
 	params,
 }: {
 	params: { productId: string };
 }): Promise<Metadata> {
-	const product = await getProductById(params.productId);
+	const { product } = await executeGraphql(ProductGetByIdDocument, {
+		id: params.productId,
+	});
 
 	return {
-		title: product.name,
-		description: product.description,
+		title: product?.name || "ImpShop - single product page",
+		description: product?.description || "Here you can find detailed information about product",
 	};
 }
 
