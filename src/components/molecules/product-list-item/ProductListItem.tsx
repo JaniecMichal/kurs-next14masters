@@ -10,7 +10,6 @@ type ProductListItemProps = {
 };
 
 export const ProductListItem = ({ product }: ProductListItemProps) => {
-	console.log(product);
 	return (
 		<li className="hover:cursor-pointer">
 			<Link className="text-inherit no-underline" href={`/product/${product.id}`}>
