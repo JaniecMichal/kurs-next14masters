@@ -1,16 +1,12 @@
-import { ProductItem } from "@/components/types";
+import { ProductFragment } from "@/gql/graphql";
 import { formatMoney } from "@/utils";
 
-type ProductFullDescriptionProps = Pick<
-	ProductItem,
-	"name" | "price" | "description" | "longDescription"
->;
+type ProductFullDescriptionProps = Pick<ProductFragment, "name" | "price" | "description">;
 
 export const ProductFullDescription = ({
 	name,
 	price,
 	description,
-	longDescription,
 }: ProductFullDescriptionProps) => {
 	return (
 		<>
@@ -19,7 +15,6 @@ export const ProductFullDescription = ({
 			</header>
 			<p className="mb-2 text-lg">Price: {formatMoney(price)}</p>
 			<p className="mb-2 text-lg">{description}</p>
-			<p className="mb-2 text-sm">{longDescription}</p>
 		</>
 	);
 };

@@ -1,23 +1,30 @@
-import { ProductDescription } from "@/components/atoms/product-description/ProductDescription";
-import { ProductImage } from "@/components/atoms/product-image/ProductImage";
-import type { ProductItem } from "@/components/types";
 import Link from "next/link";
 
+import { ProductListItemFragment } from "@/gql/graphql";
+
+import { ProductDescription } from "@/components/atoms/product-description/ProductDescription";
+import { ProductImage } from "@/components/atoms/product-image/ProductImage";
+
 type ProductListItemProps = {
-	product: ProductItem;
+	product: ProductListItemFragment;
 };
 
 export const ProductListItem = ({ product }: ProductListItemProps) => {
+	console.log(product);
 	return (
 		<li className="hover:cursor-pointer">
 			<Link className="text-inherit no-underline" href={`/product/${product.id}`}>
 				<article>
-					<ProductImage {...product.image} />
-					<ProductDescription
-						name={product.name}
-						category={product.category}
-						price={product.price}
-					/>
+					{!!product.images && product.images.length > 0 && (
+						<ProductImage src={product?.images[0]?.url || ""} alt={product.name} />
+					)}
+					{!!product.categories && product.categories.length > 0 && (
+						<ProductDescription
+							name={product.name}
+							category={product.categories[0]?.name || ""}
+							price={product.price}
+						/>
+					)}
 				</article>
 			</Link>
 		</li>

@@ -2,7 +2,7 @@ import { formatMoney } from "@/utils";
 
 type ProductDescriptionProps = {
 	name: string;
-	category: string;
+	category?: string;
 	price: number;
 };
 
