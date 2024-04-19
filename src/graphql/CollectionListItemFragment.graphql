@@ -1,0 +1,8 @@
+fragment CollectionListItem on Collection {
+	id
+	name
+	description
+	products {
+		...ProductListItem
+	}
+}
