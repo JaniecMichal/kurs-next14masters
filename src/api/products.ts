@@ -1,54 +1,41 @@
-import type { ProductItem } from "@/components/types";
+import { ProductsGetListDocument, type TypedDocumentString } from "@/gql/graphql";
 
-type ProductItemResponse = {
-	id: string;
-	title: string;
-	price: number;
-	description: string;
-	category: string;
-	image: string;
-	longDescription: string;
-};
+type GraphQLResponse<T> =
+	| { data?: undefined; errors: { message: string }[] }
+	| { data: T; errors?: undefined };
 
-export const getProductsList = async (page: string = "1") => {
-	const response = await fetch(
-		`https://naszsklep-api.vercel.app/api/products?take=20&offset=${page}`,
-	);
-	const productsResponse = (await response.json()) as ProductItemResponse[];
-	const products = productsResponse.map(
-		(product): ProductItem => ({
-			id: product.id,
-			name: product.title,
-			category: product.category,
-			price: product.price,
-			description: product.description,
-			longDescription: product.longDescription,
-			image: {
-				alt: product.title,
-				src: product.image,
-			},
+export const executeGraphql = async <TResult, TVariables>(
+	query: TypedDocumentString<TResult, TVariables>,
+	variables: TVariables,
+): Promise<TResult> => {
+	if (!process.env.GRAPHQL_URL) {
+		throw TypeError("GRAPHQL_URL is not defined");
+	}
+
+	const res = await fetch(process.env.GRAPHQL_URL, {
+		method: "POST",
+		body: JSON.stringify({
+			query,
+			variables,
 		}),
-	);
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
 
-	return products;
+	const graphqlResponse = (await res.json()) as GraphQLResponse<TResult>;
+
+	if (graphqlResponse.errors) {
+		throw TypeError(`GraphQL Error`, {
+			cause: graphqlResponse.errors,
+		});
+	}
+
+	return graphqlResponse.data;
 };
 
-export const getProductById = async (id: string) => {
-	const response = await fetch(`https://naszsklep-api.vercel.app/api/products/${id}`);
+export const getProductsList = async () => {
+	const response = await executeGraphql(ProductsGetListDocument, {});
 
-	const productResponse = (await response.json()) as ProductItemResponse;
-	const product: ProductItem = {
-		id: productResponse.id,
-		name: productResponse.title,
-		category: productResponse.category,
-		price: productResponse.price,
-		description: productResponse.description,
-		longDescription: productResponse.longDescription,
-		image: {
-			alt: productResponse.title,
-			src: productResponse.image,
-		},
-	};
-
-	return product;
+	return response.products.data;
 };
